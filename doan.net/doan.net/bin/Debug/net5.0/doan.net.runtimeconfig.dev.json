@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\KHOA\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\KHOA\\.nuget\\packages"
+      "C:\\Users\\kctrn\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\kctrn\\.nuget\\packages"
     ]
   }
 }
