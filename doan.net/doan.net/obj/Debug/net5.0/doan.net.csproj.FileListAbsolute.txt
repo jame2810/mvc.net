@@ -778,3 +778,5 @@ E:\ASP.NET repos\mvc.net\doan.net\doan.net\obj\Debug\net5.0\doan.net.genruntimec
 E:\ASP.NET repos\mvc.net\doan.net\doan.net\obj\Debug\net5.0\Razor\Views\Login\Index.cshtml.g.cs
 E:\ASP.NET repos\mvc.net\doan.net\doan.net\obj\Debug\net5.0\Razor\Views\Register\Index.cshtml.g.cs
 >>>>>>> acfc5331e4388eb39ff2511576b3b21e81c5e4c0
+C:\Users\KHOA\source\repos\mvc.net\doan.net\doan.net\obj\Debug\net5.0\Razor\Views\Login\Index.cshtml.g.cs
+C:\Users\KHOA\source\repos\mvc.net\doan.net\doan.net\obj\Debug\net5.0\Razor\Views\Register\Index.cshtml.g.cs
