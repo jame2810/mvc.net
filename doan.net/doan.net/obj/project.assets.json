@@ -6375,19 +6375,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\KHOA\\.nuget\\packages\\": {}
+    "C:\\Users\\kctrn\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KHOA\\source\\repos\\mvc.net\\doan.net\\doan.net\\doan.net.csproj",
+      "projectUniqueName": "E:\\ASP.NET repos\\mvc.net\\doan.net\\doan.net\\doan.net.csproj",
       "projectName": "doan.net",
-      "projectPath": "C:\\Users\\KHOA\\source\\repos\\mvc.net\\doan.net\\doan.net\\doan.net.csproj",
-      "packagesPath": "C:\\Users\\KHOA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KHOA\\source\\repos\\mvc.net\\doan.net\\doan.net\\obj\\",
+      "projectPath": "E:\\ASP.NET repos\\mvc.net\\doan.net\\doan.net\\doan.net.csproj",
+      "packagesPath": "C:\\Users\\kctrn\\.nuget\\packages\\",
+      "outputPath": "E:\\ASP.NET repos\\mvc.net\\doan.net\\doan.net\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\KHOA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kctrn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6446,7 +6446,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
