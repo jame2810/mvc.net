@@ -28,6 +28,8 @@ namespace project1
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
+
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +43,9 @@ namespace project1
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.UseRouting();

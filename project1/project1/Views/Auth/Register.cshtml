@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<project1.Models.Employee>
+
+@{
     ViewData["Title"] = "Sign up";
 }
 
@@ -6,23 +8,38 @@
 <div class="w-50 mx-auto">
     <h1 class="text-center">@ViewData["Title"]</h1>
 
-    <form class="my-4">
+    <form class="my-4" method="post" action="/Auth/Register">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username">
+            <input type="text" class="form-control" id="username" name="Username" autocomplete="off">
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="Password">
         </div>
 
         <div class="mb-3">
             <label for="rePassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="rePassword">
+            <input type="password" class="form-control" id="rePassword" name="ConfirmPassword">
+        </div>
+
+        <div class="my-4 w-50">
+            <select class="form-select" name="UserOfEmployeeId">
+                <option selected>Select Employee ID</option>
+
+                @foreach (var item in Model)
+                {
+                    <option value="@item.EmployeeId">@item.Name</option>
+                }
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Sign up</button>
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger mt-4" })
+        <p class="text-danger mt-4">@ViewBag.InvalidUsername</p>
+        <p class="text-danger mt-4">@ViewBag.InvalidEmp</p>
     </form>
 </div>
 

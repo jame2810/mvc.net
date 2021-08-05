@@ -2,22 +2,25 @@
     ViewData["Title"] = "Login";
 }
 
-
 <div class="w-50 mx-auto">
     <h1 class="text-center">@ViewData["Title"]</h1>
 
-    <form class="my-4">
+    <form class="my-4" method="post" action="/Auth/Login">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username">
+            <input type="text" class="form-control" id="username" name="Username" autocomplete="off">
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="Password">
         </div>
 
         <button type="submit" class="btn btn-primary">Login</button>
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger mt-4" })
+
+        <p class="text-danger mt-4">@ViewBag.InvalidUser</p>
     </form>
 </div>
 

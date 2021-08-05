@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Http;
+
 namespace doan.net.Controllers
 {
     public class EmployeeController : Controller
@@ -19,7 +21,14 @@ namespace doan.net.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            if (HttpContext.Session.GetString("userId") != null)
+            {
+                return View(await _context.Employees.ToListAsync());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
+            }          
         }
     }
 }
