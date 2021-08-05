@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using project1.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace project1.Controllers
 {
@@ -20,34 +21,37 @@ namespace project1.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string search, int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : sortOrder == "name_asc" ? "name_desc" : "name_asc";
-            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : sortOrder == "email_asc" ? "email_desc" : "email_asc";
-            ViewData["PhoneSortParm"] = String.IsNullOrEmpty(sortOrder) ? "phone_desc" : sortOrder == "phone_asc" ? "phone_desc" : "phone_asc";
-            ViewData["SalarySortParm"] = String.IsNullOrEmpty(sortOrder) ? "salary_desc" : sortOrder == "salary_asc" ? "salary_desc" : "salary_asc";
 
-            if (search != null)
-            {
+		     if (HttpContext.Session.GetString("userId") != null)
+	         {
+	         ViewData["CurrentSort"] = sortOrder;
+             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : sortOrder == "name_asc" ? "name_desc" : "name_asc";
+             ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : sortOrder == "email_asc" ? "email_desc" : "email_asc";
+             ViewData["PhoneSortParm"] = String.IsNullOrEmpty(sortOrder) ? "phone_desc" : sortOrder == "phone_asc" ? "phone_desc" : "phone_asc";
+             ViewData["SalarySortParm"] = String.IsNullOrEmpty(sortOrder) ? "salary_desc" : sortOrder == "salary_asc" ? "salary_desc" : "salary_asc";
+
+             if (search != null)
+             {
                 pageNumber = 1;
-            }
-            else
-            {
+             }
+             else
+             {
                 search = currentFilter;
-            }
-            ViewData["CurrentFilter"] = search;
-            var employees = from e in _context.Employees
+             }
+             ViewData["CurrentFilter"] = search;
+             var employees = from e in _context.Employees
                             select e;
 
-            if (!String.IsNullOrEmpty(search))
-            {
+             if (!String.IsNullOrEmpty(search))
+             {
                 employees = employees.Where(e => e.Name.Contains(search)
                                          || e.Phone.ToString().Contains(search)
                                          || e.Email.Contains(search)
                                          || e.Salary.ToString() == search);
-            }
+             }
 
-            switch (sortOrder)
-            {
+             switch (sortOrder)
+             {
                 case "name_desc":
                     employees = employees.OrderByDescending(e => e.Name);
                     break;
@@ -75,10 +79,15 @@ namespace project1.Controllers
                 default:
                     employees = employees.OrderBy(e => e.Name);
                     break;
-            }
+             }
 
-            int pageSize = 10;
-            return View(await PaginatedList<Employee>.CreateAsync(employees.AsNoTracking(), pageNumber ?? 1, pageSize));
+             int pageSize = 10;
+             return View(await PaginatedList<Employee>.CreateAsync(employees.AsNoTracking(), pageNumber ?? 1, pageSize));
+	         }
+	        else
+	        {
+	            return RedirectToAction("Login", "Auth");
+	        }            
         }
     }
 }
