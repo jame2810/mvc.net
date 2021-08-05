@@ -21,6 +21,9 @@ namespace doan.net.Controllers
 
         public async Task<IActionResult> Index()
         {
+            // Check if user is logged in
+            // If yes, render list employee
+            // Otherwise, redirect to login page
             if (HttpContext.Session.GetString("userId") != null)
             {
                 return View(await _context.Employees.ToListAsync());
