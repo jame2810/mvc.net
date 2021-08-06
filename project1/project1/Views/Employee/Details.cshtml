@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+}
+<div class="container">
+    <div class="row">
+        <h2 class="col-6 text-right">Show</h2>
+        <div class="col-6 text-right">
+            <a asp-action="Index">Back to Full List</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <p>Name</p>
+            <p>Phone</p>
+            <p>Email</p>
+            <p>Address</p>
+            <p>Gender</p>
+            <p>Salary</p>
+            <p>Working Time</p>
+        </div>
+        <div class="col-8">
+
+            <p>@Model.Name</p>
+            <p>@Model.Phone</p>
+            <p>@Model.Email</p>
+            <p>@Model.Address</p>
+            @if (@Model.Gender == 1)
+            {
+                <p>
+                    Male
+                </p>
+            }
+            else
+            {
+                <p>
+                    Female
+                </p>
+            }
+
+            <p>@Model.Salary</p>
+            @if (@Model.WorkingTime.Type == 1)
+            {
+                <p>
+                    Part Time
+                </p>
+            }
+            else
+            {
+                <p>
+                    Full Time
+                </p>
+            }
+
+        </div>
+    </div>
+</div>
+
+

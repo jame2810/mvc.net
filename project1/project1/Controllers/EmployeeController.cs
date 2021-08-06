@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using project1.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace project1.Controllers
 {
@@ -39,7 +40,7 @@ namespace project1.Controllers
                 search = currentFilter;
              }
              ViewData["CurrentFilter"] = search;
-             var employees = from e in _context.Employees
+             var employees = from e in _context.Employees.Include(e => e.WorkingTime)
                             select e;
 
              if (!String.IsNullOrEmpty(search))
@@ -89,5 +90,122 @@ namespace project1.Controllers
 	            return RedirectToAction("Login", "Auth");
 	        }            
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employees
+                .Include(e => e.WorkingTime)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(
+        [Bind("Name,Phone,Address,Email,Salary, Gender")] Employee employee, string Type, string Gender)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                employee.Gender = Int32.Parse(Gender);
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+                _context.WorkingTimes.Add(new WorkingTime
+                {
+                    Type = Int32.Parse(Type),
+                    WorkingTimeOfEmployeeId = employee.EmployeeId
+                });
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Details), new { id = employee.EmployeeId.ToString() });
+            }
+
+            ViewBag.message = "Insert failed!";
+            return View();
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            ViewBag.Gender = new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Female", Value = "2" },
+                    new SelectListItem { Text = "Male", Value = "1"}, 
+                }, "Value", "Text");
+            ViewBag.WorkingTime = new SelectList(
+               new List<SelectListItem>
+               {
+                    new SelectListItem { Text = "Part Time", Value = "1" },
+                    new SelectListItem { Text = "Full Time", Value = "2"},
+               }, "Value", "Text");
+            var employee = await _context.Employees
+                .Include(e => e.WorkingTime)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+
+        private ActionResult HttpNotFound()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult Update([Bind("EmployeeId,Name,Phone,Address,Email,Salary, Gender")] Employee employee, string Type)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var data = _context.Employees
+                    .Include(e => e.WorkingTime)
+                    .Where(e => e.EmployeeId == employee.EmployeeId)
+                    .Single();
+
+                data.Name = employee.Name;
+                data.Email = employee.Email;
+                data.Phone = employee.Phone;
+                data.Salary = employee.Salary;
+                data.Address = employee.Address;
+                data.Gender = employee.Gender;
+                data.WorkingTime.Type = Int32.Parse(Type);              
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            var dataEdit = _context.Employees.Where(s => s.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            return View(dataEdit);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            Employee employee = _context.Employees
+                .Where(e => e.EmployeeId == id)
+                .Include(w => w.WorkingTime)
+                .FirstOrDefault();
+            _context.Remove(employee);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

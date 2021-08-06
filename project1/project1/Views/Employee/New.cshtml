@@ -1,0 +1,62 @@
+﻿@model project1.Models.Employee
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    New Employee
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "Employee", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <label>Name</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Phone" })
+                        </div>
+                        <div class="form-group">
+                            <label>Salary</label>
+                            @Html.TextBoxFor(m => m.Salary, new { @class = "form-control", @placeholder = "Salary" })
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select name="Gender">
+                                <option value="0">--Gender--</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Working Time</label>
+                            <select name="Type">
+                                <option value="0">--Type--</option>
+                                <option value="1">Part Time</option>
+                                <option value="2">Full Time</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" value="Save" class="btn btn-success" />
+                            @if (ViewBag.message != "")
+                            {
+                                <span class="badge badge-danger">@ViewBag.message</span>
+                            }
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
